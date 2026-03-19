@@ -53,7 +53,7 @@ namespace Flowers
                     }
                     catch
                     {
-                        // если картинка не грузится, ничего страшного
+                        
                     }
                 }
             }
@@ -131,6 +131,8 @@ VALUES (@OrderId, @ProductId, @Quantity, @UnitPrice);";
         {
             Close();
         }
+
     }
+
 }
 
