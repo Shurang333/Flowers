@@ -87,6 +87,9 @@ namespace Flowers
             pic.Top = 10;
             pic.SizeMode = PictureBoxSizeMode.Zoom;
 
+            // Заглушка на случай отсутствия/ошибки загрузки картинки
+            pic.Image = ImagePlaceholder.Get();
+
             if (!string.IsNullOrEmpty(imagePath))
             {
                 try
@@ -99,7 +102,7 @@ namespace Flowers
                 }
                 catch
                 {
-                    // если картинка не загрузилась, оставляем пустым
+                    // если картинка не загрузилась, оставляем заглушку
                 }
             }
 

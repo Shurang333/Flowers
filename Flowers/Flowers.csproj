@@ -79,6 +79,7 @@
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="ImagePlaceholder.cs" />
     <!-- Forms -->
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>

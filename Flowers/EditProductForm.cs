@@ -43,6 +43,10 @@ namespace Flowers
             chkIsActive.Checked = (bool)row["IsActive"];
 
             imagePathRelative = row["ImagePath"] as string;
+
+            // Заглушка на случай отсутствия/битого файла картинки
+            picImage.Image = ImagePlaceholder.Get();
+
             if (!string.IsNullOrEmpty(imagePathRelative))
             {
                 string fullPath = Path.Combine(Application.StartupPath, imagePathRelative);

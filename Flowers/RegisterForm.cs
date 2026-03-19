@@ -16,7 +16,8 @@ namespace Flowers
         private void btnRegister_Click(object sender, EventArgs e)
         {
             var email = txtEmail.Text.Trim();
-            var phone = txtPhone.Text.Trim();
+            var phoneRaw = txtPhone.Text.Trim();
+            var phone = NormalizePhone(phoneRaw);
             var fullName = txtFullName.Text.Trim();
             var pwd = txtPassword.Text;
             var pwd2 = txtConfirmPassword.Text;
@@ -36,7 +37,8 @@ namespace Flowers
                 return;
             }
 
-            if (!Regex.IsMatch(phone, @"^\\+?\\d{7,15}$"))
+            // Номер телефона сохраняем в нормализованном виде: опционально '+', затем 7-15 цифр.
+            if (!Regex.IsMatch(phone, @"^\+?\d{7,15}$"))
             {
                 MessageBox.Show("Некорректный номер телефона.", "Регистрация", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -89,6 +91,25 @@ VALUES (@Email, @Phone, @Pwd, @FullName, @RoleId)";
             {
                 MessageBox.Show("Ошибка регистрации: " + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private static string NormalizePhone(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+                return null;
+
+            input = input.Trim();
+
+            // Храним префикс только если он реально в начале строки
+            string prefix = input.StartsWith("+") ? "+" : string.Empty;
+
+            // Удаляем все нецифровые символы (пробелы, скобки, дефисы и т.п.)
+            string digits = Regex.Replace(input, @"\D", string.Empty);
+
+            if (string.IsNullOrWhiteSpace(digits))
+                return null;
+
+            return prefix + digits;
         }
     }
 }
